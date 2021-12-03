@@ -86,6 +86,44 @@ def main(argv):
     print("Jobs\n", jobs)
     print("Road\n", road)
 
+    print(5*"\n")
+
+    temp = {'V1': ['1', '4', '2'], 'V2': ['3', '5', '6'], 'V3': []}
+
+    total = 0
+    v1_total = 0
+    v1_index = vehicles[0].start_index
+    for i in temp["V1"]:
+        job_id = jobs[int(i)-1].id
+        job_index = jobs[int(i)-1].location_index
+        print("For Job#" + str(job_id), ":", v1_index, "-->", job_index)
+        v1_total += time_matrix[v1_index][job_index]
+        v1_index = job_index
+    # v1_total += time_matrix[v1_index][vehicles[0].start_index]
+
+    print(v1_total)
+
+    total = 0
+    v2_total = 0
+    v2_index = vehicles[1].start_index
+    for i in temp["V2"]:
+        job_id = jobs[int(i)-1].id
+        job_index = jobs[int(i)-1].location_index
+        print("For Job#" + str(job_id), ":", v2_index, "-->", job_index)
+        v2_total += time_matrix[v2_index][job_index]
+        v2_index = job_index
+    # v1_total += time_matrix[v1_index][vehicles[0].start_index]
+
+    print(v2_total)
+
+    # v3_index = vehicles[2].start_index
+    # for i in temp["V3"]:
+    #     job_index = jobs[int(i)-1].location_index
+    #     total += time_matrix[v3_index][job_index]
+    #     v3_index = job_index
+
+    # print(total)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
