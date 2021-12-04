@@ -2,8 +2,6 @@ import json
 import sys
 import numpy as np
 from timeit import default_timer as timer
-
-from numpy.core.numeric import outer
 from brute_force import brute_force_it
 from greedy_approach import greedy
 
@@ -71,6 +69,7 @@ def main(argv):
     with open(algorithm + "_output.json", "w") as outfile:
         outfile.write(json_object)
     outfile.close()
+    return output
 
 
 if __name__ == "__main__":
