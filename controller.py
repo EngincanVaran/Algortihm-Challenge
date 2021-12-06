@@ -46,7 +46,7 @@ def parse_response(data, vehicles):
     return result
 
 
-def send_2_VROOM(data):
+def send_to_vroom(data):
     # forward input to vroom server
     URL = "http://localhost:3000"
     response = requests.post(URL, json=data)
@@ -83,5 +83,5 @@ async def solver(request: SolverInput):
 async def vroom(request: Request):
     # Assumed the inputs will be as fine as possible
     # Otherwise vroom server will already give the error
-    status_code, response = send_2_VROOM(await request.json())
+    status_code, response = send_to_vroom(await request.json())
     return JSONResponse(response, status_code)

@@ -12,10 +12,6 @@
         "3": {
             "delivery_duration": 226,
             "jobs": "[4]"
-        },
-        "4": {
-            "delivery_duration": 0,
-            "jobs": "[]"
         }
     }
 }
