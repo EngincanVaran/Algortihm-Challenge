@@ -6,12 +6,12 @@ The codes inside this repo serve 2 things:
 
 ## Usage
 
-### Algorithm
+#### Algorithm Question
 solver.py has 6 algorithms to approach the VRP.
 - Brute-Force (Basic, Penalty Only, Capacity & Penalty)
 - Greedy (Basic, Penalty Only, Capacity & Penalty)
 
-#### REST
+#### REST Question
 Please take a look at the guide for [vroom-express](https://github.com/VROOM-Project/vroom-express) to run the vroom in your machine.
 - VROOM-express listen http://localhost:3000
 
