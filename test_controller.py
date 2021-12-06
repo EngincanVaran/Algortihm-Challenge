@@ -7,6 +7,12 @@ import json
 # pip3 install pytest
 # pytest
 
+# for running tests with coverage
+# coverage run -m pytest
+# coverage xml
+# or
+# pytest --cov=./ --cov-report=xml
+
 client = TestClient(app)
 
 CUSTOM_SOLVER_PATH = "/solver"
@@ -59,12 +65,45 @@ def test_custom_solver_invalid_algorithm():
     assert response.json() == {"detail": "Invalid Algorithm"}
 
 
+def test_custom_solver_invalid_algorithm2():
+    response = client.post(
+        CUSTOM_SOLVER_PATH,
+        json={
+            'datasource': DUMMY_INPUT_FILE,
+            'algorithm': 'greedy-penene'
+        })
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Invalid Algorithm"}
+
+
 def test_custom_solver_valid_greedy():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
             'datasource': DUMMY_INPUT_FILE,
             'algorithm': 'greedy'
+        })
+    assert response.status_code == 200
+    assert response.json() != None
+
+
+def test_custom_solver_valid_brute_force_penalty():
+    response = client.post(
+        CUSTOM_SOLVER_PATH,
+        json={
+            'datasource': DUMMY_INPUT_FILE,
+            'algorithm': 'brute-force-penalty'
+        })
+    assert response.status_code == 200
+    assert response.json() != None
+
+
+def test_custom_solver_valid_greedy_penalty():
+    response = client.post(
+        CUSTOM_SOLVER_PATH,
+        json={
+            'datasource': DUMMY_INPUT_FILE,
+            'algorithm': 'greedy-penalty'
         })
     assert response.status_code == 200
     assert response.json() != None
@@ -86,14 +125,21 @@ def test_vroom_empty_input():
         VROOM_SOLVER_PATH,
         json={})
     assert response.status_code == 400
+    assert response.json() == {
+        "code": 2,
+        "error": "Invalid JSON object in request, please add vehicles and jobs or shipments to the object body"
+    }
 
 
-def test_vroom_empty_input():
+def test_vroom_invalid_json_input():
     response = client.post(
         VROOM_SOLVER_PATH,
-        json={})
+        json={"Test": "Test"})
     assert response.status_code == 400
-    assert response.json() != None
+    assert response.json() == {
+        "code": 2,
+        "error": "Invalid JSON object in request, please add vehicles and jobs or shipments to the object body"
+    }
 
 
 def test_vroom_valid_input():

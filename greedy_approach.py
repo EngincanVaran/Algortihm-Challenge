@@ -19,12 +19,6 @@ def set_up_v_j_matrix(matrix, vehicles, jobs, number_jobs, visited_jobs):
     return np.array(vehicle_job_matrix)
 
 
-def convert_loc_index_2_job(job_index, jobs):
-    for j in jobs:
-        if j["location_index"] == job_index:
-            return j["id"]
-
-
 def find_min_time_job(matrix, jobs):
     min_time = 100000000000
     index_v = 0
@@ -81,7 +75,6 @@ def greedy(matrix, jobs, vehicles):
         time_list[vehicle] += temp_time
         visited_jobs.append(job)
         # print("Visited Jobs:", visited_jobs)
-        # visited_jobs.append(convert_loc_index_2_job(job, jobs))
 
         vehicles = change_vehicle_position(
             vehicles, vehicle, jobs[job-1]["location_index"])

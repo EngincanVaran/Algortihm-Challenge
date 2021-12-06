@@ -7,6 +7,9 @@ import json
 
 # Just learned FastAPI :)
 
+POSSIBLE_ALGORTIHMS = ["brute-force", "greedy",
+                       "greedy-penalty", "brute-force-penalty"]
+
 app = FastAPI()
 
 
@@ -57,7 +60,7 @@ def send_to_vroom(data):
         vehicles = data["vehicles"]
         response = parse_response(response.text, vehicles)
         return 200, response
-    return response.status_code, response.text
+    return response.status_code, response.json()
 
 
 @app.post("/solver")
@@ -66,7 +69,7 @@ async def solver(request: SolverInput):
     if request.datasource != "input.json":
         raise HTTPException(status_code=400, detail="Datasource Not Found")
 
-    elif request.algorithm != "brute-force" and request.algorithm != "greedy":
+    elif request.algorithm not in POSSIBLE_ALGORTIHMS:
         raise HTTPException(status_code=400, detail="Invalid Algorithm")
 
     else:
