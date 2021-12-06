@@ -3,7 +3,12 @@ import sys
 import numpy as np
 from timeit import default_timer as timer
 from brute_force import brute_force_it
+from brute_force_with_penalty import brute_force_it_penalty
 from greedy_approach import greedy
+from greedy_approach_with_penalty import greedy_penalty
+
+POSSIBLE_ALGORTIHMS = ["brute-force", "greedy",
+                       "greedy-penalty", "brute-force-penalty"]
 
 
 def prepare_output(min_time, min_partition, min_time_list):
@@ -31,7 +36,7 @@ def main(argv):
         print("Could not open file!")
         return
 
-    if algorithm != "brute-force" and algorithm != "greedy":
+    if algorithm not in POSSIBLE_ALGORTIHMS:
         print("Invalid Algorithm")
         return
 
@@ -54,6 +59,16 @@ def main(argv):
         end = timer()
         print("Elapsed Time (Brute-Force):", end-start, "seconds.")
 
+    elif algorithm == "brute-force-penalty":
+        start = timer()
+        min_time, min_partition, min_time_list = brute_force_it_penalty(
+            matrix=time_matrix,
+            jobs=jobs,
+            vehicles=vehicles)
+        output = prepare_output(min_time, min_partition, min_time_list)
+        end = timer()
+        print("Elapsed Time (Brute-Force):", end-start, "seconds.")
+
     elif algorithm == "greedy":
         start = timer()
         # min_time, min_partition, min_time_list =
@@ -64,6 +79,18 @@ def main(argv):
         output = prepare_output(min_time, min_partition, min_time_list)
         end = timer()
         print("Elapsed Time (Greedy Approach):", end-start, "seconds.")
+
+    elif algorithm == "greedy-penalty":
+        start = timer()
+        # min_time, min_partition, min_time_list =
+        min_time, min_partition, min_time_list = greedy_penalty(
+            matrix=time_matrix,
+            jobs=jobs,
+            vehicles=vehicles)
+        output = prepare_output(min_time, min_partition, min_time_list)
+        end = timer()
+        print("Elapsed Time (Greedy Approach with penalties):",
+              end-start, "seconds.")
 
     json_object = json.dumps(output, indent=4)
     with open(algorithm + "_output.json", "w") as outfile:

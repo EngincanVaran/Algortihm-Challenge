@@ -5,7 +5,8 @@ def calculate_time_for_vehicle(time_matrix, vehicle_sp, job_route, jobs):
     time = 0
     for job in job_route:
         job_index = jobs[job-1]["location_index"]
-        elapsed_time = time_matrix[vehicle_sp][job_index]
+        elapsed_time = time_matrix[vehicle_sp][job_index] + \
+            jobs[job-1]["service"]
         # print("For Job#" + str(id), ":", vehicle_sp,
         #      "-->", job_index, "Time:", elapsed_time)
         vehicle_sp = job_index
@@ -26,7 +27,7 @@ def parse_perm(perm, number_vehicle):
     return partitions
 
 
-def brute_force_it(matrix, jobs, vehicles):
+def brute_force_it_penalty(matrix, jobs, vehicles):
     number_jobs = len(jobs)
     number_vehicle = len(vehicles)
 

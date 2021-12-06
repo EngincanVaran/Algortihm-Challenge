@@ -24,6 +24,7 @@ class SolverInput(BaseModel):
 
 def parse_response(data, vehicles):
     data = json.loads(data)
+    # print(data)
     result = {}
     result["total_delivery_duration"] = 0
     result["routes"] = {}
@@ -34,9 +35,11 @@ def parse_response(data, vehicles):
         result["routes"][v]["routes"] = []
 
     result["total_delivery_duration"] = data["summary"]["cost"]
+    result["total_delivery_duration"] += data["summary"]["service"]
+
     for vdata in data["routes"]:
         vehicle_id = vdata["vehicle"]
-        duration = vdata["cost"]
+        duration = vdata["cost"] + vdata["service"]
         routes = []
         steps = vdata["steps"]
         for step in steps[1:-1]:
