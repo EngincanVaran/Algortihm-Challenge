@@ -17,7 +17,8 @@ client = TestClient(app)
 
 CUSTOM_SOLVER_PATH = "/solver"
 VROOM_SOLVER_PATH = "/vroom"
-DUMMY_INPUT_FILE = "input.json"
+DUMMY_INPUT_FILE = "Inputs/input.json"
+DUMMY_INPUT_FILE_LOCAL = "input.json"
 
 
 def test_custom_solver_no_request_body():
@@ -38,7 +39,7 @@ def test_custom_solver_only_datasource():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE
+            'datasource': DUMMY_INPUT_FILE_LOCAL
         })
     assert response.status_code == 422
 
@@ -58,7 +59,7 @@ def test_custom_solver_invalid_algorithm():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'greed'
         })
     assert response.status_code == 400
@@ -69,7 +70,7 @@ def test_custom_solver_invalid_algorithm2():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'greedy-penene'
         })
     assert response.status_code == 400
@@ -80,7 +81,7 @@ def test_custom_solver_valid_greedy():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'greedy'
         })
     assert response.status_code == 200
@@ -91,7 +92,7 @@ def test_custom_solver_valid_brute_force_penalty():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'brute-force-penalty'
         })
     assert response.status_code == 200
@@ -102,7 +103,7 @@ def test_custom_solver_valid_greedy_penalty():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'greedy-penalty'
         })
     assert response.status_code == 200
@@ -113,7 +114,7 @@ def test_custom_solver_valid_brute_force():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
-            'datasource': DUMMY_INPUT_FILE,
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'brute-force'
         })
     assert response.status_code == 200

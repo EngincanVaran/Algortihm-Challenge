@@ -2,10 +2,10 @@ import json
 import sys
 import numpy as np
 from timeit import default_timer as timer
-from brute_force import brute_force_it
-from brute_force_with_penalty import brute_force_it_penalty
-from greedy_approach import greedy
-from greedy_approach_with_penalty import greedy_penalty
+from Algorithms.brute_force import brute_force_it
+from Algorithms.brute_force_with_penalty import brute_force_it_penalty
+from Algorithms.greedy_approach import greedy
+from Algorithms.greedy_approach_with_penalty import greedy_penalty
 
 POSSIBLE_ALGORTIHMS = ["brute-force", "greedy",
                        "greedy-penalty", "brute-force-penalty"]
@@ -31,7 +31,7 @@ def main(argv):
     json_file_name = argv[0]
     algorithm = argv[1]
     try:
-        file = open(json_file_name)
+        file = open("Inputs/" + json_file_name)
     except IOError:
         print("Could not open file!")
         return
@@ -93,7 +93,7 @@ def main(argv):
               end-start, "seconds.")
 
     json_object = json.dumps(output, indent=4)
-    with open(algorithm + "_output.json", "w") as outfile:
+    with open("Outputs/" + algorithm + "_output.json", "w") as outfile:
         outfile.write(json_object)
     outfile.close()
     return output
