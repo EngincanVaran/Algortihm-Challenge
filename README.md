@@ -8,7 +8,7 @@ The codes inside this repo serve 2 things:
 
 There are 2 main questions:
 
-#### ALGORITHM Question
+#### ALGORITHM Question
 
 solver.py has 6 algorithms to approach the VRP.
 - Brute-Force (Basic, Penalty Only, Capacity & Penalty)
