@@ -99,12 +99,34 @@ def test_custom_solver_valid_brute_force_penalty():
     assert response.json() != None
 
 
+def test_custom_solver_valid_brute_force_capacity():
+    response = client.post(
+        CUSTOM_SOLVER_PATH,
+        json={
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
+            'algorithm': 'brute-force-capacity'
+        })
+    assert response.status_code == 200
+    assert response.json() != None
+
+
 def test_custom_solver_valid_greedy_penalty():
     response = client.post(
         CUSTOM_SOLVER_PATH,
         json={
             'datasource': DUMMY_INPUT_FILE_LOCAL,
             'algorithm': 'greedy-penalty'
+        })
+    assert response.status_code == 200
+    assert response.json() != None
+
+
+def test_custom_solver_valid_greedy_capacity():
+    response = client.post(
+        CUSTOM_SOLVER_PATH,
+        json={
+            'datasource': DUMMY_INPUT_FILE_LOCAL,
+            'algorithm': 'greedy-capacity'
         })
     assert response.status_code == 200
     assert response.json() != None

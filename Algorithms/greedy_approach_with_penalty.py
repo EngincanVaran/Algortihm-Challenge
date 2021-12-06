@@ -1,5 +1,7 @@
 import numpy as np
 
+BIG_NUMBER = 9999999999999999
+
 
 def calculate_time_for_vehicle(matrix, vehicle_pos, job_pos, penalty):
     if matrix[vehicle_pos][job_pos] == 0:
@@ -19,8 +21,8 @@ def set_up_v_j_matrix(matrix, vehicles, jobs, number_jobs, visited_jobs):
     return np.array(vehicle_job_matrix)
 
 
-def find_min_time_job(matrix, jobs):
-    min_time = 100000000000
+def find_min_time_job(matrix):
+    min_time = BIG_NUMBER
     index_v = 0
     index_j = 0
     for v in range(len(matrix)):
@@ -38,8 +40,8 @@ def change_vehicle_position(vehicles, position, job_position):
     return vehicles
 
 
-def print_locations(vehicles, jobs, number_jobs, number_vehicles, visited_jobs):
-    line = ["" for _ in range(number_jobs+number_vehicles)]
+def print_locations(vehicles, jobs, visited_jobs, len_road):
+    line = ["" for _ in range(len_road)]
     for v in vehicles:
         line[v["start_index"]] = "v" + str(v["id"])
     for j in jobs:
@@ -51,6 +53,7 @@ def print_locations(vehicles, jobs, number_jobs, number_vehicles, visited_jobs):
 def greedy_penalty(matrix, jobs, vehicles):
     number_jobs = len(jobs)
     number_vehicle = len(vehicles)
+    len_road = len(matrix)
 
     time_list = [0 for _ in range(number_vehicle)]
     total_time = 0
@@ -59,8 +62,7 @@ def greedy_penalty(matrix, jobs, vehicles):
 
     count = 0
     print("Step:", count)
-    print_locations(vehicles, jobs, number_jobs,
-                    number_vehicle, visited_jobs)
+    print_locations(vehicles, jobs, visited_jobs, len_road)
 
     vehicle_job_matrix = set_up_v_j_matrix(
         matrix, vehicles, jobs, number_jobs, visited_jobs)
@@ -69,7 +71,7 @@ def greedy_penalty(matrix, jobs, vehicles):
         count += 1
         print("Step:", count)
         vehicle, job, temp_time = find_min_time_job(
-            vehicle_job_matrix, jobs)
+            vehicle_job_matrix)
         total_time += temp_time
         partition[vehicle].append(job)
         time_list[vehicle] += temp_time
@@ -78,8 +80,7 @@ def greedy_penalty(matrix, jobs, vehicles):
 
         vehicles = change_vehicle_position(
             vehicles, vehicle, jobs[job-1]["location_index"])
-        print_locations(vehicles, jobs, number_jobs,
-                        number_vehicle, visited_jobs)
+        print_locations(vehicles, jobs, visited_jobs, len_road)
 
         vehicle_job_matrix = set_up_v_j_matrix(
             matrix, vehicles, jobs, number_jobs, visited_jobs)

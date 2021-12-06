@@ -6,9 +6,12 @@ from Algorithms.brute_force import brute_force_it
 from Algorithms.brute_force_with_penalty import brute_force_it_penalty
 from Algorithms.greedy_approach import greedy
 from Algorithms.greedy_approach_with_penalty import greedy_penalty
+from Algorithms.brute_force_with_penalty_capacity import brute_force_it_capacity
+from Algorithms.greedy_approach_with_capacity import greedy_capacity
 
-POSSIBLE_ALGORTIHMS = ["brute-force", "greedy",
-                       "greedy-penalty", "brute-force-penalty"]
+POSSIBLE_ALGORITHMS = ["brute-force", "greedy",
+                       "greedy-penalty", "brute-force-penalty",
+                       "brute-force-capacity", "greedy-capacity"]
 
 
 def prepare_output(min_time, min_partition, min_time_list):
@@ -21,6 +24,7 @@ def prepare_output(min_time, min_partition, min_time_list):
             index+1)]["delivery_duration"] = int(min_time_list[index])
         result["routes"][str(
             index+1)]["jobs"] = str(min_partition[index])
+    print("Total Delivery Time:", str(min_time))
     return result
 
 
@@ -36,7 +40,7 @@ def main(argv):
         print("Could not open file!")
         return
 
-    if algorithm not in POSSIBLE_ALGORTIHMS:
+    if algorithm not in POSSIBLE_ALGORITHMS:
         print("Invalid Algorithm")
         return
 
@@ -44,10 +48,6 @@ def main(argv):
     vehicles = json_data["vehicles"]
     jobs = json_data["jobs"]
     time_matrix = np.array(json_data["matrix"])
-
-    print("Time Matrix")
-    print(time_matrix)
-    print(2*"\n")
 
     if algorithm == "brute-force":
         start = timer()
@@ -67,7 +67,17 @@ def main(argv):
             vehicles=vehicles)
         output = prepare_output(min_time, min_partition, min_time_list)
         end = timer()
-        print("Elapsed Time (Brute-Force):", end-start, "seconds.")
+        print("Elapsed Time (Brute-Force-Penalty):", end-start, "seconds.")
+
+    elif algorithm == "brute-force-capacity":
+        start = timer()
+        min_time, min_partition, min_time_list = brute_force_it_capacity(
+            matrix=time_matrix,
+            jobs=jobs,
+            vehicles=vehicles)
+        output = prepare_output(min_time, min_partition, min_time_list)
+        end = timer()
+        print("Elapsed Time (Brute-Force-Capacity):", end-start, "seconds.")
 
     elif algorithm == "greedy":
         start = timer()
@@ -78,7 +88,7 @@ def main(argv):
             vehicles=vehicles)
         output = prepare_output(min_time, min_partition, min_time_list)
         end = timer()
-        print("Elapsed Time (Greedy Approach):", end-start, "seconds.")
+        print("Elapsed Time (Greedy):", end-start, "seconds.")
 
     elif algorithm == "greedy-penalty":
         start = timer()
@@ -89,10 +99,22 @@ def main(argv):
             vehicles=vehicles)
         output = prepare_output(min_time, min_partition, min_time_list)
         end = timer()
-        print("Elapsed Time (Greedy Approach with penalties):",
+        print("Elapsed Time (Greedy-Penalty):",
               end-start, "seconds.")
 
-    json_object = json.dumps(output, indent=4)
+    elif algorithm == "greedy-capacity":
+        start = timer()
+        # min_time, min_partition, min_time_list =
+        min_time, min_partition, min_time_list = greedy_capacity(
+            matrix=time_matrix,
+            jobs=jobs,
+            vehicles=vehicles)
+        output = prepare_output(min_time, min_partition, min_time_list)
+        end = timer()
+        print("Elapsed Time (Greedy-Capacity):",
+              end-start, "seconds.")
+
+    json_object = json.dumps(output, indent=5)
     with open("Outputs/" + algorithm + "_output.json", "w") as outfile:
         outfile.write(json_object)
     outfile.close()
@@ -102,4 +124,9 @@ def main(argv):
 if __name__ == "__main__":
     main(sys.argv[1:])
 
-# main(["input.json", "greedy"])
+# UNCOMMENT TO SEE ALL ALGORITHMS IN ACTION
+# for algo in POSSIBLE_ALGORITHMS:
+#     main(["input.json", algo])
+
+# UNCOMMENT TO SEE SELECTED ALGORITHM IN ACTION
+# main(["input.json", "brute-force-capacity"])

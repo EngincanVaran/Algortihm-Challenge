@@ -7,8 +7,9 @@ import json
 
 # Just learned FastAPI :)
 
-POSSIBLE_ALGORTIHMS = ["brute-force", "greedy",
-                       "greedy-penalty", "brute-force-penalty"]
+POSSIBLE_ALGORITHMS = ["brute-force", "greedy",
+                       "greedy-penalty", "brute-force-penalty",
+                       "brute-force-capacity", "greedy-capacity"]
 
 app = FastAPI()
 
@@ -69,7 +70,7 @@ async def solver(request: SolverInput):
     if request.datasource != "input.json":
         raise HTTPException(status_code=400, detail="Datasource Not Found")
 
-    elif request.algorithm not in POSSIBLE_ALGORTIHMS:
+    elif request.algorithm not in POSSIBLE_ALGORITHMS:
         raise HTTPException(status_code=400, detail="Invalid Algorithm")
 
     else:
