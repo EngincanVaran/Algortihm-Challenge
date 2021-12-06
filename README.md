@@ -1,16 +1,8 @@
 # Project
 
 The codes inside this repo serves 2 things:
-    - Solving a VRP (and CVRP) problem with Brute-Force & Greedy Approach
-    - REST Service with FASTAPI in order to solve the VRP and CVRP by utilizing VROOM
-
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
-
-```bash
-pip install foobar
-```
+- Solving a VRP (and CVRP) problem with Brute-Force & Greedy Approach
+- REST Service with FASTAPI in order to solve the VRP and CVRP by utilizing VROOM
 
 ## Usage
 
@@ -49,4 +41,6 @@ coverage run -m pytest
 
 ## Authors
 - Engincan Varan 
-For contact: engincanvaran@gmail.com / evaran@sabanciuniv.edu
+For contact:
+- engincanvaran@gmail.com
+- evaran@sabanciuniv.edu
