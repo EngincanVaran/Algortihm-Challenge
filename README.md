@@ -1,15 +1,17 @@
 # Project
 
-The codes inside this repo serves 2 things:
+The codes inside this repo serve 2 things:
 - Solving a VRP (and CVRP) problem with Brute-Force & Greedy Approach
 - REST Service with FASTAPI in order to solve the VRP and CVRP by utilizing VROOM
 
 ## Usage
 
+### Algorithm
 solver.py has 6 algorithms to approach the VRP.
 - Brute-Force (Basic, Penalty Only, Capacity & Penalty)
 - Greedy (Basic, Penalty Only, Capacity & Penalty)
 
+#### REST
 Please take a look at the guide for [vroom-express](https://github.com/VROOM-Project/vroom-express) to run the vroom in your machine.
 - VROOM-express listen http://localhost:3000
 
@@ -40,7 +42,7 @@ coverage run -m pytest
 ```
 
 ## Authors
-- Engincan Varan 
+Engincan Varan 
 For contact:
 - engincanvaran@gmail.com
 - evaran@sabanciuniv.edu
